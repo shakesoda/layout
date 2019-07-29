@@ -33,14 +33,15 @@ function incl_luajit()
         configuration {}
             includedirs {
                 "./thirdparty/LuaJIT-2.0.0/src",
+                "/usr/include/luajit-2.1"
             }
             -- Note: you will need to manually rebuild LuaJIT with the correct
             -- compiler (mingw, msvc) first
             libdirs {
-                "./thirdparty/LuaJIT-2.0.0/src",
+                "./thirdparty/LuaJIT-2.0.0/src"
             }
             -- lua51.dll
-            links { "lua51" }
+            links { "lua5.1" }
 end
 
 function as_console_app()
@@ -55,7 +56,7 @@ end
 
 function lay_project(project_name, as_build_type, src_file)
     project(project_name)
-        platforms { "x32", "x64" }
+        platforms { "x64", "x32" }
         -- kind "ConsoleApp"
         -- kind "WindowedApp"
         language "C"
@@ -86,7 +87,7 @@ function lay_project(project_name, as_build_type, src_file)
                 "-wd4100"
             }
 
-        configuration { "gmake", "windows" }
+        configuration { "gmake" }
             -- Nehalem chips were released in 2008, and include SSE4.
             --
             -- Note that gcc -Q --help=target -march=nehalem (or whatever other
@@ -110,7 +111,7 @@ function lay_project(project_name, as_build_type, src_file)
 
         configuration { "Debug" }
             defines { "DEBUG" }
-        configuration { "Debug", "gmake" }
+        configuration { "Debug", "gmake", "windows" }
             buildoptions {
                 "-ggdb",
                 "-fstack-protector-strong",

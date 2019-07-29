@@ -16,6 +16,10 @@ extern "C" {
 #define LUALAY_PUSH_SCALAR lua_pushinteger
 #endif
 
+#ifndef _MSC_VER
+#define __declspec(x) __attribute__ ((visibility ("default")))
+#endif
+
 int lualay_context_new(lua_State* L)
 {
     lua_settop(L, 0);
@@ -218,7 +222,7 @@ int lualay_item_first_child(lua_State* L)
     return 1;
 }
 
-static const struct luaL_reg laylib[] = {
+static const struct luaL_Reg laylib[] = {
     {"new", lualay_context_new},
     {"run", lualay_run_context},
     {"reset", lualay_reset_context},
